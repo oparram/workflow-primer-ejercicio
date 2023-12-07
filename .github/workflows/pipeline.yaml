@@ -1,11 +1,24 @@
 name: Enviar mensaje al ejecutarse
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  # Need `contents: read` to checkout the repository.
+  # Need `contents: write` to update the step metadata.
+  contents: write
+  pull-requests: write
 
 jobs:
   send-message:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Enviar mensaje
-      run: echo "¡Hola desde GitHub Actions Santiago Parra!"
+    - name: Checkout
+      uses: actions/checkout@v4
+    - id: get_step
+      run: |
+          echo "¡Hola desde GitHub Actions Santiago Parra!"
